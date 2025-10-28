@@ -222,27 +222,89 @@ section {
 
 /* ===========================================
    THEME TOGGLE BUTTON
+   Improved: button inverts (black/white) automatically using color variables.
+   JS will set the button icon (☀ / 🌙) and `data-theme` attribute.
    =========================================== */
 .theme-toggle {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  /* Use foreground as button background and background as icon color to auto-invert */
+  background: var(--foreground);
+  color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 20px;
-  box-shadow: 0 4px 12px hsla(190, 100%, 40%, 0.4);
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   z-index: 100;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* subtle hover/active states that respect the color variables */
 .theme-toggle:hover {
-  background: var(--primary-glow);
-  transform: scale(1.1);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+}
+
+.theme-toggle:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Focus styles for accessibility */
+.theme-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(100, 150, 255, 0.15), 0 10px 26px rgba(0,0,0,0.18);
+}
+
+/* Make the icon slightly larger on larger screens */
+@media (min-width: 900px) {
+  .theme-toggle {
+    width: 52px;
+    height: 52px;
+    font-size: 20px;
+    border-radius: 0.85rem;
+  }
+}
+
+/* Add an optional visual "ring" in light mode that uses the primary color */
+.light-mode .theme-toggle {
+  border-color: var(--glass-border);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* Optional: A small label that appears on hover (pure CSS, no markup changes) */
+.theme-toggle[data-has-tooltip="true"] {
+  position: fixed;
+}
+.theme-toggle[data-has-tooltip="true"]::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 60px;
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--card);
+  color: var(--foreground);
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform-origin: top center;
+}
+.theme-toggle[data-has-tooltip="true"]:hover::after {
+  opacity: 1;
+  transform: translateX(50%) translateY(6px);
 }
 
 /* ===========================================
