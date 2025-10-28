@@ -80,3 +80,26 @@ const cards = document.querySelectorAll('.project-card, .skill-card');
 cards.forEach((card, index) => {
     card.style.animationDelay = `${index * 0.1}s`;
 });
+
+const toggleButton = document.getElementById("theme-toggle");
+  const body = document.body;
+
+  // Load saved theme from localStorage
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    body.classList.add("dark-mode");
+    toggleButton.textContent = "☀️";
+  }
+
+  toggleButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+
+    // Change icon and save theme
+    if (body.classList.contains("dark-mode")) {
+      toggleButton.textContent = "☀️";
+      localStorage.setItem("theme", "dark");
+    } else {
+      toggleButton.textContent = "🌙";
+      localStorage.setItem("theme", "light");
+    }
+  });
