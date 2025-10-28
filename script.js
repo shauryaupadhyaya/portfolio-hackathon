@@ -81,25 +81,63 @@ cards.forEach((card, index) => {
     card.style.animationDelay = `${index * 0.1}s`;
 });
 
-const toggleButton = document.getElementById("theme-toggle");
-  const body = document.body;
+(function () {
+  const btn = document.querySelector('.theme-toggle');
+  if (!btn) return;
 
-  // Load saved theme from localStorage
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    body.classList.add("dark-mode");
-    toggleButton.textContent = "☀️";
+  // Read saved theme, or fallback to system preference
+  const saved = localStorage.getItem('theme');
+  const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const initial = saved ? saved : (systemPrefersLight ? 'light' : 'dark');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-mode');
+      btn.textContent = '☀'; // sun
+      btn.setAttribute('aria-label', 'Switch to dark mode');
+      btn.dataset.theme = 'light';
+      btn.setAttribute('data-has-tooltip', 'true');
+      btn.setAttribute('data-label', 'Light mode');
+    } else {
+      document.documentElement.classList.remove('light-mode');
+      btn.textContent = '🌙'; // moon
+      btn.setAttribute('aria-label', 'Switch to light mode');
+      btn.dataset.theme = 'dark';
+      btn.setAttribute('data-has-tooltip', 'true');
+      btn.setAttribute('data-label', 'Dark mode');
+    }
+    localStorage.setItem('theme', theme);
   }
 
-  toggleButton.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
+  // Toggle handler
+  function toggleTheme() {
+    const current = btn.dataset.theme === 'light' ? 'light' : 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  }
 
-    // Change icon and save theme
-    if (body.classList.contains("dark-mode")) {
-      toggleButton.textContent = "☀️";
-      localStorage.setItem("theme", "dark");
-    } else {
-      toggleButton.textContent = "🌙";
-      localStorage.setItem("theme", "light");
+  // Click and keyboard support
+  btn.addEventListener('click', toggleTheme);
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleTheme();
     }
   });
+
+  // Apply initial theme
+  applyTheme(initial);
+
+  // If user hasn't saved a pref, respond to system changes
+  if (!saved && window.matchMedia) {
+    const mql = window.matchMedia('(prefers-color-scheme: light)');
+    if (mql.addEventListener) {
+      mql.addEventListener('change', (e) => {
+        applyTheme(e.matches ? 'light' : 'dark');
+      });
+    } else if (mql.addListener) {
+      mql.addListener((e) => {
+        applyTheme(e.matches ? 'light' : 'dark');
+      });
+    }
+  }
+})();
