@@ -85,26 +85,28 @@ cards.forEach((card, index) => {
   const btn = document.querySelector('.theme-toggle');
   if (!btn) return;
 
-  // Read saved theme, or fallback to system preference
+  // Read saved theme, or fallback to dark mode as default
   const saved = localStorage.getItem('theme');
   const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-  const initial = saved ? saved : (systemPrefersLight ? 'light' : 'dark');
+  const initial = saved ? saved : 'dark'; // Default to dark
 
   function applyTheme(theme) {
     if (theme === 'light') {
       document.documentElement.classList.add('light-mode');
-      btn.textContent = '☀'; // sun
+      // When currently light, show moon to indicate switching to dark
+      btn.textContent = '🌙';
       btn.setAttribute('aria-label', 'Switch to dark mode');
       btn.dataset.theme = 'light';
       btn.setAttribute('data-has-tooltip', 'true');
-      btn.setAttribute('data-label', 'Light mode');
+      btn.setAttribute('data-label', 'Switch to dark mode');
     } else {
       document.documentElement.classList.remove('light-mode');
-      btn.textContent = '🌙'; // moon
+      // When currently dark, show sun to indicate switching to light
+      btn.textContent = '☀';
       btn.setAttribute('aria-label', 'Switch to light mode');
       btn.dataset.theme = 'dark';
       btn.setAttribute('data-has-tooltip', 'true');
-      btn.setAttribute('data-label', 'Dark mode');
+      btn.setAttribute('data-label', 'Switch to light mode');
     }
     localStorage.setItem('theme', theme);
   }
@@ -127,7 +129,7 @@ cards.forEach((card, index) => {
   // Apply initial theme
   applyTheme(initial);
 
-  // If user hasn't saved a pref, respond to system changes
+  // If user hasn't saved a pref, respond to system changes but default to dark
   if (!saved && window.matchMedia) {
     const mql = window.matchMedia('(prefers-color-scheme: light)');
     if (mql.addEventListener) {
