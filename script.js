@@ -60,32 +60,28 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     
-    // Create mailto link
     const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
     const mailtoLink = `mailto:shaurya.upadhyaya@myglobal.school?subject=${subject}&body=${body}`;
     
-    // Open email client
     window.location.href = mailtoLink;
     
-    // Show success message
     alert('Opening your email client...');
     
-    // Reset form
     this.reset();
 });
 
-// Add stagger animation to cards
+// Add animation to cards
 const cards = document.querySelectorAll('.project-card, .skill-card');
 cards.forEach((card, index) => {
     card.style.animationDelay = `${index * 0.1}s`;
 });
 
+// Dark and Light Theme
 (function () {
   const btn = document.querySelector('.theme-toggle');
   if (!btn) return;
 
-  // Read saved theme, or fallback to dark mode as default
   const saved = localStorage.getItem('theme');
   const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   const initial = saved ? saved : 'dark'; // Default to dark
@@ -93,7 +89,6 @@ cards.forEach((card, index) => {
   function applyTheme(theme) {
     if (theme === 'light') {
       document.documentElement.classList.add('light-mode');
-      // When currently light, show moon to indicate switching to dark
       btn.textContent = '🌙';
       btn.setAttribute('aria-label', 'Switch to dark mode');
       btn.dataset.theme = 'light';
@@ -101,7 +96,6 @@ cards.forEach((card, index) => {
       btn.setAttribute('data-label', 'Switch to dark mode');
     } else {
       document.documentElement.classList.remove('light-mode');
-      // When currently dark, show sun to indicate switching to light
       btn.textContent = '☀';
       btn.setAttribute('aria-label', 'Switch to light mode');
       btn.dataset.theme = 'dark';
@@ -111,13 +105,12 @@ cards.forEach((card, index) => {
     localStorage.setItem('theme', theme);
   }
 
-  // Toggle handler
+  // Toggle
   function toggleTheme() {
     const current = btn.dataset.theme === 'light' ? 'light' : 'dark';
     applyTheme(current === 'light' ? 'dark' : 'light');
   }
 
-  // Click and keyboard support
   btn.addEventListener('click', toggleTheme);
   btn.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -126,10 +119,7 @@ cards.forEach((card, index) => {
     }
   });
 
-  // Apply initial theme
   applyTheme(initial);
-
-  // If user hasn't saved a pref, respond to system changes but default to dark
   if (!saved && window.matchMedia) {
     const mql = window.matchMedia('(prefers-color-scheme: light)');
     if (mql.addEventListener) {
