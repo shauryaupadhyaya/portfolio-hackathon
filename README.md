@@ -1,9 +1,4 @@
-# ✨ Features of Portfolio Website
-
-This README explains the main **features, animations, and design elements** used in my personal portfolio website.  
-The goal was to create a smooth, interactive, and visually attractive website while keeping it responsive and lightweight.
-
----
+# Portfolio
 
 ## 🎨 UI / UX Design Features
 
@@ -35,12 +30,6 @@ The goal was to create a smooth, interactive, and visually attractive website wh
 - **Responsive Layout:**  
   The layout automatically adjusts to different screen sizes (desktop, tablet, and mobile).
 
-- **Navigation Menu:**  
-  Sticky navigation bar that stays at the top of the page and highlights active sections.
-
-- **Back to Top Button:**  
-  A floating button appears after scrolling down, allowing quick navigation back to the top.
-
 ---
 
 ## ⚙️ Animation and Visual Effects
@@ -51,9 +40,6 @@ The goal was to create a smooth, interactive, and visually attractive website wh
 - **Glow and Shadow Effects:**  
   Subtle neon glows around text and buttons using `box-shadow` and `text-shadow`.
 
-- **Button Ripple Effect:**  
-  Clickable buttons create a soft ripple effect for a more tactile feeling.
-
 - **Card Hover Elevation:**  
   Project and team cards lift slightly and cast a shadow when hovered over, giving a 3D feel.
 
@@ -62,35 +48,10 @@ The goal was to create a smooth, interactive, and visually attractive website wh
 
 ---
 
-## 📱 Responsiveness and Accessibility
+## 🧠 Languages Used
 
-- **Flexible Grid System:**  
-  Built with CSS Grid and Flexbox to ensure equal spacing and alignment across all screen sizes.
-
-- **Mobile Navigation Menu:**  
-  Collapses into a hamburger menu on smaller screens for better usability.
-
-- **Readable Font and Contrast:**  
-  Colors and font weights chosen for clear readability even in dark mode.
-
-- **Lightweight Performance:**  
-  Optimized CSS and JavaScript for fast loading times, even on slow connections.
-
----
-
-## 🧠 Technologies Used
-
-- **HTML5** for structure  
-- **CSS3** for styling and animations  
-- **JavaScript (ES6)** for interactivity and scroll-based effects  
-
----
-
-## 🛠 Future Enhancements
-
-- Add **dynamic theme toggle** (light / dark mode)  
-- Include **animation libraries** like GSAP or Three.js for more advanced effects  
-- Implement a **backend contact form** with Node.js  
-- Add a **project filter** for sorting by type or category  
+- **HTML** for structure  
+- **CSS** for styling and animations  
+- **JavaScript** for interactivity and scroll-based effects  
 
 ---
